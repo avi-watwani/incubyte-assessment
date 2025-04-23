@@ -58,5 +58,28 @@ RSpec.describe StringCalculator do
     it "handles empty entries caused by adjacent delimiters" do
       expect(StringCalculator.add("//;\n7;;5")).to eq(12)
     end
+
+    # Ignore numbers greater than 1000
+    context "with numbers greater than 1000" do
+      it "ignores numbers greater than 1000" do
+        expect(StringCalculator.add("2,1001")).to eq(2)
+      end
+
+      it "includes 1000 in the sum" do
+        expect(StringCalculator.add("2,1000")).to eq(1002)
+      end
+
+      it "ignores multiple numbers greater than 1000" do
+        expect(StringCalculator.add("2,1001,3,2000")).to eq(5)
+      end
+
+      it "ignores large numbers when using custom delimiters" do
+        expect(StringCalculator.add("//;\n1;1001;2")).to eq(3)
+      end
+
+      it "handles combination of large numbers and other rules" do
+         expect(StringCalculator.add("10, 1001, \n20, 2000")).to eq(30)
+      end
+    end
   end
 end
