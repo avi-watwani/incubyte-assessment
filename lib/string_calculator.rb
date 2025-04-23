@@ -1,7 +1,5 @@
 class StringCalculator
-  def self.add(input_string)
-    return 0 if input_string.empty?
-
+  def self.parse_delimiter_and_numbers(input_string)
     delimiter = /,|\n/ # Default delimiters
     numbers_part = input_string
 
@@ -18,8 +16,14 @@ class StringCalculator
         numbers_part = match[2] # The rest of the string containing numbers
       end
     end
+    [delimiter, numbers_part]
+  end
 
-    numbers = numbers_part.split(delimiter).map(&:to_i)
+  def self.add(input_string)
+    return 0 if input_string.empty?
+
+    delimiter_pattern, numbers_part = parse_delimiter_and_numbers(input_string)
+    numbers = numbers_part.split(delimiter_pattern).map(&:to_i)
 
     # Check for negative numbers
     negatives = numbers.select { |n| n < 0 }
