@@ -47,9 +47,16 @@ RSpec.describe StringCalculator do
 
     # Handle negative numbers
     context "with negative numbers" do
-      it "throws an exception for a single negative number" do
+      it "throws an exception for a negative numbers" do
         expect { StringCalculator.add("-1") }.to raise_error(ArgumentError, "negatives not allowed -1")
+        expect { StringCalculator.add("//;\n-1;2") }.to raise_error(ArgumentError, "negatives not allowed -1")
+        expect { StringCalculator.add("//|\n5|-9|-7") }.to raise_error(ArgumentError, "negatives not allowed -9,-7")
       end
+    end
+
+    # Handle empty entries
+    it "handles empty entries caused by adjacent delimiters" do
+      expect(StringCalculator.add("//;\n7;;5")).to eq(12)
     end
   end
 end
