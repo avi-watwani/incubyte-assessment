@@ -81,5 +81,12 @@ RSpec.describe StringCalculator do
          expect(StringCalculator.add("10, 1001, \n20, 2000")).to eq(30)
       end
     end
+
+    # Handle long custom delimiters
+    context "with long custom delimiters" do
+      it "supports custom delimiters of any length" do
+        expect(StringCalculator.add("//[***]\n5***9***7")).to eq(21)
+      end
+    end
   end
 end
