@@ -29,5 +29,11 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.add("1\n2")).to eq(3)
       expect(StringCalculator.add("1\n2\n3")).to eq(6)
     end
+
+    # Handle mixed separators (commas and newlines)
+    it "returns the sum of numbers separated by commas and newlines" do
+      expect(StringCalculator.add("6,9\n2")).to eq(17)
+      expect(StringCalculator.add("14\n6,33,52\n4\n19")).to eq(128)
+    end
   end
 end
