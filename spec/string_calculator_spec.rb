@@ -40,6 +40,8 @@ RSpec.describe StringCalculator do
     context "with custom delimiters" do
       it "supports a custom delimiter specified on the first line" do
         expect(StringCalculator.add("//;\n1;2")).to eq(3)
+        expect(StringCalculator.add("//|\n5|9|7")).to eq(21)
+        expect(StringCalculator.add("//*\n18*67*3*22")).to eq(110)
       end
     end
   end
