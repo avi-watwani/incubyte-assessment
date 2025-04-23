@@ -96,6 +96,9 @@ RSpec.describe StringCalculator do
     context "with multiple custom delimiters" do
       it "supports multiple single-character delimiters" do
         expect(StringCalculator.add("//[*][%]\n1*2%3")).to eq(6)
+        expect(StringCalculator.add("//[***][%%]\n5***9%%7")).to eq(21)
+        expect(StringCalculator.add("//[$][.]\n1$2.3")).to eq(6)
+        expect(StringCalculator.add("//[--][++]\n10--20++30--40")).to eq(100)
       end
     end
   end

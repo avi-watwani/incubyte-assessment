@@ -1,22 +1,37 @@
 class StringCalculator
   def self.parse_delimiter_and_numbers(input_string)
-    delimiter = /,|\n/ # Default delimiters
+    delimiter_pattern = /,|\n/ # Default delimiters
     numbers_part = input_string
 
-    # Check for multi-character delimiters
-    multi_char_match = input_string.match(/^\/\/\[(.*?)\]\n(.*)/m)
-    if multi_char_match
-      delimiter = multi_char_match[1] # The custom delimiter
-      numbers_part = multi_char_match[2] # The rest of the string containing numbers
-    else
-      # Check for custom delimiter definition
-      match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
-      if match
-        delimiter = match[1]
-        numbers_part = match[2] # The rest of the string containing numbers
+    if input_string.start_with?("//")
+      # Split into the delimiter definition line and the rest (numbers)
+      parts = input_string.split("\n", 2)
+      if parts.length == 2
+        delimiter_definition = parts[0][2..-1] # Remove "//"
+        potential_numbers_part = parts[1]
+
+        # Scan for all bracketed delimiters: [...]
+        custom_delimiters = delimiter_definition.scan(/\[(.*?)\]/).flatten
+
+        if !custom_delimiters.empty?
+          # Filter out any potentially empty delimiters like //[]...
+          valid_delimiters = custom_delimiters.reject(&:empty?)
+          if !valid_delimiters.empty?
+            escaped_delimiters = valid_delimiters.map { |d| Regexp.escape(d) }
+            delimiter_pattern = Regexp.new(escaped_delimiters.join('|'))
+            numbers_part = potential_numbers_part
+          end
+        else
+          # Check for custom delimiter definition
+          match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
+          if match
+            delimiter_pattern = match[1]
+            numbers_part = match[2] # The rest of the string containing numbers
+          end
+        end
       end
     end
-    [delimiter, numbers_part]
+    [delimiter_pattern, numbers_part]
   end
 
   def self.add(input_string)
