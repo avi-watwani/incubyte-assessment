@@ -5,11 +5,18 @@ class StringCalculator
     delimiter = /,|\n/ # Default delimiters
     numbers_part = input_string
 
-    # Check for custom delimiter definition
-    match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
-    if match
-      delimiter = match[1]
-      numbers_part = match[2] # The rest of the string containing numbers
+    # Check for multi-character delimiters
+    multi_char_match = input_string.match(/^\/\/\[(.*?)\]\n(.*)/m)
+    if multi_char_match
+      delimiter = multi_char_match[1] # The custom delimiter
+      numbers_part = multi_char_match[2] # The rest of the string containing numbers
+    else
+      # Check for custom delimiter definition
+      match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
+      if match
+        delimiter = match[1]
+        numbers_part = match[2] # The rest of the string containing numbers
+      end
     end
 
     numbers = numbers_part.split(delimiter).map(&:to_i)
