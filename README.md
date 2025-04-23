@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Thanks for the opportunity, please find the details below
 
-Things you may want to cover:
+This project is the submission of Incubyte's technical challenge.
+It's a simple string calculator, please find the code in the below files:
 
-* Ruby version
+1.  `lib/string_calculator.rb`
+2.  `spec/string_calculator_spec.rb`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To run the tests, please run the following command:
+`rspec spec/string_calculator_spec.rb`
+or
+`bundle exec rspec`
