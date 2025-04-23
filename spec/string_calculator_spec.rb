@@ -35,5 +35,12 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.add("6,9\n2")).to eq(17)
       expect(StringCalculator.add("14\n6,33,52\n4\n19")).to eq(128)
     end
+
+    # Handle custom delimiters
+    context "with custom delimiters" do
+      it "supports a custom delimiter specified on the first line" do
+        expect(StringCalculator.add("//;\n1;2")).to eq(3)
+      end
+    end
   end
 end
