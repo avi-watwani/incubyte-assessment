@@ -6,22 +6,13 @@ class StringCalculator
     numbers_part = input_string
 
     # Check for custom delimiter definition
-    if input_string.start_with?("//")
-      match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
-      if match
-        custom_delimiter = match[1]
-        numbers_part = match[2] # The rest of the string containing numbers
-        delimiter = custom_delimiter
-      end
+    match = input_string.match(/^\/\/(.)\n(.*)/m) # m for multiline matching of \n
+    if match
+      delimiter = match[1]
+      numbers_part = match[2] # The rest of the string containing numbers
     end
 
-    # Conditional split
-    numbers = if delimiter.is_a?(Regexp)
-                numbers_part.split(delimiter)
-              else
-                numbers_part.split(delimiter)
-              end
-
+    numbers = numbers_part.split(delimiter)
     numbers.map(&:to_i).sum
   end
 end
